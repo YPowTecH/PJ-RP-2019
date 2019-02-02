@@ -1548,6 +1548,9 @@ typedef struct playerState_s {
   qboolean  dualBlade;
 
   vec3_t    lastHitLoc;
+
+  //By PowTecH - Queue team
+  int		queueTeam;
 } playerState_t;
 
 
