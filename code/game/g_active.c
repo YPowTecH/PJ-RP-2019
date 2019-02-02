@@ -1605,10 +1605,13 @@ void ClientThink_real( gentity_t *ent ) {
 
     if (faceKicked && faceKicked->client && (!OnSameTeam(ent, faceKicked) || g_friendlyFire.integer) &&
       (!faceKicked->client->ps.duelInProgress || faceKicked->client->ps.duelIndex == ent->s.number) &&
-      (!ent->client->ps.duelInProgress || ent->client->ps.duelIndex == faceKicked->s.number) &&
-	  (ent->client->sess.queueTeam == faceKicked->client->sess.queueTeam && g_friendlyFire.integer))//By PowTecH - Queue same team so no dmg
+      (!ent->client->ps.duelInProgress || ent->client->ps.duelIndex == faceKicked->s.number))
     {
-      if ( faceKicked && faceKicked->client && faceKicked->health && faceKicked->takedamage )
+		//By PowTecH - Queue same team so no dmg
+		if (ent->client->sess.queueTeam == faceKicked->client->sess.queueTeam && !g_friendlyFire.integer) {
+			G_Sound(faceKicked, CHAN_AUTO, G_SoundIndex(va("sound/weapons/melee/punch%d", Q_irand(1, 4))));//By PowTecH - kick: if we land one make the sound regardless
+		}
+      else if ( faceKicked && faceKicked->client && faceKicked->health && faceKicked->takedamage )
       {//push them away and do pain
         vec3_t oppDir;
         int strength = (int)VectorNormalize2( client->ps.velocity, oppDir );
@@ -1645,10 +1648,10 @@ void ClientThink_real( gentity_t *ent ) {
           }
         }
 
+		G_Sound(faceKicked, CHAN_AUTO, G_SoundIndex(va("sound/weapons/melee/punch%d", Q_irand(1, 4))));
       }
     }
 
-	G_Sound(faceKicked, CHAN_AUTO, G_SoundIndex(va("sound/weapons/melee/punch%d", Q_irand(1, 4))));//By PowTecH - kick: if we land one make the sound regardless
     client->ps.forceKickFlip = 0;
   }
 
