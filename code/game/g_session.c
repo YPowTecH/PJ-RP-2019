@@ -24,7 +24,7 @@ void G_WriteClientSessionData( gclient_t *client ) {
   const char  *s;
   const char  *var;
 
-  s = va("%i %i %i %i %i %i %i %i %i %i %i", 
+  s = va("%i %i %i %i %i %i %i %i %i %i %i %i %i", 
     client->sess.sessionTeam,
     client->sess.spectatorTime,
     client->sess.spectatorState,
@@ -37,7 +37,11 @@ void G_WriteClientSessionData( gclient_t *client ) {
     client->sess.selectedFP,
 
     //By PowTecH - Ads
-    client->sess.lastAd
+    client->sess.lastAd,
+
+	//By PowTecH - queue
+	client->sess.queueNum,
+	client->sess.queueTeam
     );
 
   var = va( "session%i", (int)(client - level.clients) );
@@ -75,7 +79,7 @@ void G_ReadSessionData( gclient_t *client ) {
   var = va( "session%i", (int)(client - level.clients) );
   trap_Cvar_VariableStringBuffer( var, s, sizeof(s) );
 
-  sscanf( s, "%i %i %i %i %i %i %i %i %i %i %i",
+  sscanf( s, "%i %i %i %i %i %i %i %i %i %i %i %i %i",
     &sessionTeam,                 // bk010221 - format
     &client->sess.spectatorTime,
     &spectatorState,              // bk010221 - format
@@ -88,7 +92,11 @@ void G_ReadSessionData( gclient_t *client ) {
     &client->sess.selectedFP,
 
     //By PowTecH - Ads
-    &client->sess.lastAd
+    &client->sess.lastAd,
+
+	//By PowTecH - queue
+	&client->sess.queueNum,
+	&client->sess.queueTeam
     );
 
   // bk001205 - format issues

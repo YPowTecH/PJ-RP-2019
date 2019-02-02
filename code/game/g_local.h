@@ -312,6 +312,10 @@ typedef struct {
 
   //By PowTecH - Ads
   int               lastAd;
+
+  //By PowTecH - queue
+  int				queueNum;
+  int				queueTeam;
 } clientSession_t;
 
 // JK2MV
@@ -527,9 +531,12 @@ typedef struct {
   qboolean  bboxEncoding;
 
   //By PowTecH - Queue
-  int     queueCount; //how many ppl are in queue
-  int     inQueue[MAX_CLIENTS]; //ppl in queue
-  int     queuePop; //time until queue pop
+  int		queueCount; //how many ppl are in queue
+  int		inQueue[MAX_CLIENTS]; //ppl in queue
+  int		queueTime;
+  int		queuePop; //time until queue pop
+  int		redTeam[16][MAX_CLIENTS];//16 possible games with max clients possible in each
+  int		blueTeam[16][MAX_CLIENTS];//16 possible games with max clients possible in each
 
 } level_locals_t;
 
@@ -854,6 +861,9 @@ void G_CheckClientTimeouts  ( gentity_t *ent );
 void ClientThink      ( int clientNum );
 void ClientEndFrame      ( gentity_t *ent );
 void G_RunClient      ( gentity_t *ent );
+
+//By PowTecH - queue
+void G_QueueRemove_Helper(gentity_t *ent);
 
 //
 // g_team.c

@@ -872,7 +872,6 @@ ForceClientSkin
 Forces a client's skin (for teamplay)
 ===========
 */
-/*
 static void ForceClientSkin( gclient_t *client, char *model, const char *skin ) {
   char *p;
 
@@ -883,7 +882,6 @@ static void ForceClientSkin( gclient_t *client, char *model, const char *skin ) 
   Q_strcat(model, MAX_QPATH, "/");
   Q_strcat(model, MAX_QPATH, skin);
 }
-*/
 
 /*
 ===========
@@ -1805,6 +1803,13 @@ void ClientSpawn(gentity_t *ent) {
             client->sess.sessionTeam, 
             client->pers.teamState.state, 
             spawn_origin, spawn_angles);
+  }
+  //By PowTecH - Queue respawn control
+  else if (client->sess.queueTeam == 1 || client->sess.queueTeam == 2) {
+	  spawnPoint = SelectCTFSpawnPoint(
+		  client->sess.queueTeam,
+		  TEAM_BEGIN,
+		  spawn_origin, spawn_angles);
   }
   else {
     do {

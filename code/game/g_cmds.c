@@ -1145,11 +1145,9 @@ static void Cmd_Say_f( gentity_t *ent, int mode, qboolean arg0 ) {
   }
   else if (!strcmp(p, "!join") || !strcmp(p, "!j")) {
     Cmd_JoinQueue_f(ent);
-    //trap_SendServerCommand(ent - g_entities, "print \"^2[^7You Joined Queue^2]^7 .\n\"");
   }
   else if (!strcmp(p, "!leave") || !strcmp(p, "!l")) {
     Cmd_LeaveQueue_f(ent);
-    //trap_SendServerCommand(ent - g_entities, "print \"^2[^7You Left Queue^2]^7 .\n\"");
   }
 }
 
@@ -2472,7 +2470,6 @@ void Cmd_Queue_f(gentity_t *ent) {
     }
     trap_SendServerCommand(ent - g_entities, va("print \"^5[^7%i^5]^7 - %s\n\"", i, g_entities[level.inQueue[i]].client->pers.netname));
   }
-
 }
 
 /*
@@ -2490,6 +2487,7 @@ void Cmd_JoinQueue_f(gentity_t *ent) {
 
     if (level.inQueue[i] == -1) {
       level.inQueue[i] = ent->s.number;
+	  level.queueCount++;
       trap_SendServerCommand(ent - g_entities, va("print \"^2[^7You joined the queue^2]^7\n\""));
       return;
     }
@@ -2510,6 +2508,7 @@ void Cmd_LeaveQueue_f(gentity_t *ent) {
     //found him
     if (level.inQueue[i] == ent->s.number) {
       level.inQueue[i] = -1;
+	  level.queueCount--;
       found = qtrue;
       break;
     }

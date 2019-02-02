@@ -884,8 +884,19 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 
   //By PowTecH - inQueue init
   for (i = 0; i < MAX_CLIENTS; i++) {
-    level.inQueue[i] = -1;
+	  level.inQueue[i] = -1;
+  }  
+  //By PowTecH - red and blue team init
+  for (i = 0; i < 16; i++) {
+	  int j;
+	  for (j = 0; j < MAX_CLIENTS; j++) {
+		  level.redTeam[i][j] = -1;
+		  level.blueTeam[i][j] = -1;
+	  }
   }
+  //By PowTecH - queueTime
+  level.queueTime = 20000;
+  level.queuePop = level.time + level.queueTime;
 }
 
 
