@@ -894,6 +894,12 @@ void G_InitGame( int levelTime, int randomSeed, int restart ) {
 		  level.blueTeam[i][j] = -1;
 	  }
   }
+  //By PowTecH - Scorelimit
+  level.finalScore = 5;
+
+  //By PowTecH - Finished Game Flag
+  level.finishedGame = -1;
+
   //By PowTecH - queueTime
   level.queueTime = 20000;
   level.queuePop = level.time + level.queueTime;

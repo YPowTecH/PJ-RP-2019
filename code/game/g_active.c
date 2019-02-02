@@ -999,8 +999,13 @@ void ClientThink_real( gentity_t *ent ) {
   pmove_t    pm;
   int      oldEventSequence;
   int      msec;
-  int      i;
+  int      i, j = 0, k = 0;
   usercmd_t  *ucmd;
+
+  //By PowTecH - Merc: for spawning
+  vec3_t  spawn_origin, spawn_angles;
+  gentity_t  *spawnPoint;
+  gentity_t  *target;
 
   client = ent->client;
 
@@ -1682,16 +1687,10 @@ void ClientThink_real( gentity_t *ent ) {
   if (level.queuePop <= level.time) {
 	if (level.queueCount >= 2) {
 		int max;
-		int j = 0;
-		int k = 0;
 		char mes[MAX_TOKEN_CHARS] = "";
 
 		char  model[MAX_QPATH];
 		char  userinfo[MAX_INFO_STRING];
-
-		vec3_t  spawn_origin, spawn_angles;
-		gentity_t  *spawnPoint;
-		gentity_t  *target;
 
 		trap_GetUserinfo(target->s.number, userinfo, sizeof(userinfo));
 
@@ -1798,6 +1797,49 @@ void ClientThink_real( gentity_t *ent ) {
 	}
   }
 
+  if (level.finishedGame != -1) {
+	  j = level.finishedGame;
+	  for (i = 0; i < MAX_CLIENTS; i++) {
+		  k = level.redTeam[j][i];
+		  if (k == -1) {
+			  break;
+		  }
+
+		  target = &g_entities[k];
+		  //clear all the team information
+		  target->client->sess.queueNum = -1;
+		  target->client->sess.queueTeam = 0;
+
+		  //new spawn location
+		  spawnPoint = SelectSpawnPoint(target->client->ps.origin, spawn_origin, spawn_angles);
+
+		  TeleportPlayer(target, spawnPoint->s.origin, spawnPoint->s.angles);
+
+		  level.redTeam[j][i] = -1;
+	  }
+
+	  for (i = 0; i < MAX_CLIENTS; i++) {
+		  k = level.blueTeam[j][i];
+		  if (k == -1) {
+			  break;
+		  }
+
+		  target = &g_entities[k];
+		  //clear all the team information
+		  target->client->sess.queueNum = -1;
+		  target->client->sess.queueTeam = 0;
+
+		  //new spawn location
+		  spawnPoint = SelectSpawnPoint(target->client->ps.origin, spawn_origin, spawn_angles);
+
+		  TeleportPlayer(target, spawnPoint->s.origin, spawnPoint->s.angles);
+
+		  level.blueTeam[j][i] = -1;
+	  }
+	  level.blueScore[j] = 0;
+	  level.redScore[j] = 0;
+	  level.finishedGame = -1;
+  }
 
   // perform once-a-second actions
   ClientTimerActions( ent, msec );

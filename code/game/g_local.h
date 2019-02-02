@@ -537,6 +537,10 @@ typedef struct {
   int		queuePop; //time until queue pop
   int		redTeam[16][MAX_CLIENTS];//16 possible games with max clients possible in each
   int		blueTeam[16][MAX_CLIENTS];//16 possible games with max clients possible in each
+  int		finalScore;//score to play to
+  int		redScore[16];//16 possible game scores
+  int		blueScore[16];//16 possible game scores
+  int		finishedGame;//game that just hit the finalscore
 
 } level_locals_t;
 

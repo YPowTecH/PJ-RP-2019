@@ -1147,7 +1147,10 @@ static void Cmd_Say_f( gentity_t *ent, int mode, qboolean arg0 ) {
     Cmd_JoinQueue_f(ent);
   }
   else if (!strcmp(p, "!leave") || !strcmp(p, "!l")) {
-    Cmd_LeaveQueue_f(ent);
+	  Cmd_LeaveQueue_f(ent);
+  }
+  else if (!strcmp(p, "!score") || !strcmp(p, "!s")) {
+	  Cmd_ScoreQueue_f(ent);
   }
 }
 
@@ -2544,6 +2547,21 @@ void Cmd_LeaveQueue_f(gentity_t *ent) {
   return;
 }
 
+/*
+=================
+By PowTecH - Score
+=================
+*/
+void Cmd_ScoreQueue_f(gentity_t *ent) {
+	int i;
+	i = ent->client->sess.queueNum;
+	if (i == -1) {
+		//no in game
+		return;
+	}
+	
+	trap_SendServerCommand(ent - g_entities, va("print \"^5[^1Red^7:^1%i^7 - ^4%i^7:^4Blue^5]^7 - %s\n\"", level.redScore[i], level.blueScore[i]));
+}
 
 /*
 =================
