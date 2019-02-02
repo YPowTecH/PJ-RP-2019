@@ -1,0 +1,13 @@
+{
+  "version": "0.2.1",
+  "defaults": {},
+  "configurations": [
+    {
+      "type": "dll",
+      "exe": "",
+      "project": "CMakeLists.txt",
+      "projectTarget": "jk2mpgame_x64.dll (out\\Debug\\jk2mpgame_x64.dll)",
+      "name": "jk2mpgame_x64.dll (out\\Debug\\jk2mpgame_x64.dll)"
+    }
+  ]
+}
