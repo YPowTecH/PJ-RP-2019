@@ -1334,7 +1334,7 @@ void ForceGrip( gentity_t *self )
     !g_entities[tr.entityNum].client->ps.fd.forceGripCripple &&
     g_entities[tr.entityNum].client->ps.fd.forceGripBeingGripped < level.time &&
     ForcePowerUsableOn(self, &g_entities[tr.entityNum], FP_GRIP) &&
-    (g_friendlyFire.integer || !OnSameTeam(self, &g_entities[tr.entityNum])) ) //don't grip someone who's still crippled
+    (g_friendlyFire.integer || !OnSameTeam(self, &g_entities[tr.entityNum]))) //don't grip someone who's still crippled
   {
     self->client->ps.fd.forceGripEntityNum = tr.entityNum;
     g_entities[tr.entityNum].client->ps.fd.forceGripStarted = level.time;

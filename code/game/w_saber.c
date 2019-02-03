@@ -2213,11 +2213,6 @@ qboolean CheckSaberDamage(gentity_t *self, vec3_t saberStart, vec3_t saberEnd, q
       return qfalse;
     }
 
-	//By PowTecH - Queue same team so no dmg
-	if (!g_friendlySaber.integer && g_entities[tr.entityNum].client->sess.queueTeam == self->client->sess.queueTeam) {
-		return qfalse;
-	}
-
     if (g_entities[tr.entityNum].inuse && g_entities[tr.entityNum].client &&
       g_entities[tr.entityNum].client->ps.duelInProgress &&
       g_entities[tr.entityNum].client->ps.duelIndex != self->s.number)
@@ -2349,11 +2344,6 @@ qboolean CheckSaberDamage(gentity_t *self, vec3_t saberStart, vec3_t saberEnd, q
     {
       return qfalse;
     }
-
-	//By PowTecH - Queue same team so no dmg
-	if (!g_friendlySaber.integer && otherOwner->client->sess.queueTeam == self->client->sess.queueTeam) {
-		return qfalse;
-	}
 
     if (otherOwner && otherOwner->client &&
       otherOwner->client->ps.duelInProgress &&
